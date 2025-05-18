@@ -1,39 +1,51 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>My Mapbox Map</title>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Get started with Mapbox GL JS expressions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+    <link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
 
-  <!-- Mapbox GL JS CSS -->
-  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      mapboxgl.accessToken = 'pk.eyJ1Ijoid2Vjb2xsYWJvcmF0ZSIsImEiOiJjbWF0NG93ejkwcG0yMm5wczc0OGdtc3l3In0.AmbQqom2zX3CmzDuz5Wrig ';
+      const map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/mapbox/light-v11', // stylesheet location
+        center: [-93.261, 44.971], // starting position [lng, lat]
+        zoom: 10 // starting zoom
+      });
 
-  <style>
-    body { margin: 0; padding: 0; }
-    #map { width: 100vw; height: 100vh; }
-  </style>
-</head>
-<body>
-
-  <div id="map"></div>
-
-  <!-- Mapbox GL JS -->
-  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
-  <script>
-    // This is default public token Replace with your own Mapbox token from https://account.mapbox.com/access-tokens/
-    mapboxgl.accessToken = 'pk.eyJ1Ijoid2Vjb2xsYWJvcmF0ZSIsImEiOiJjbWF0NG93ejkwcG0yMm5wczc0OGdtc3l3In0.AmbQqom2zX3CmzDuz5Wrig';
-
-    const map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v12',
-      center: [138.6, -34.9], // Longitude, Latitude (e.g., Adelaide)
-      zoom: 12
-    });
-
-    // Optional: Add a marker
-    new mapboxgl.Marker()
-      .setLngLat([138.6, -34.9])
-      .setPopup(new mapboxgl.Popup().setText("Hello from Mapbox!"))
-      .addTo(map);
-  </script>
-</body>
+      map.on('load', () => {
+        map.addLayer({
+          id: 'historical-places',
+          type: 'circle',
+          source: {
+            type: 'vector',
+            url: 'https://console.mapbox.com/studio/tilesets/wecollaborate.9lp6ja7t'
+          },
+          'source-layer': 'HPC_landmarks-bizva4'
+'
+        });
+      });
+    </script>
+  </body>
 </html>
